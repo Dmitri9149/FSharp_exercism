@@ -14,14 +14,15 @@ let create hours minutes =
 
     hrsString + ":" + mnsString
 
- 
-let add minutes clock = 
-    let clockMins = 
-        match clock with 
-            | x when x[-2] = '0' -> int x[0..1] * 60 + int x[-1..-1] + minutes
-            | x  -> int x[0..1] * 60 + int x[-2..-1] + minutes
-    create 0 clockMins
-
+ // clock is string like this "09:35"
+let add (minutes: int) (clock: string) = 
+    let hrs = match clock with 
+                | x when x[0] = '0' -> int (string x[1])
+                | _ -> int clock[0..1]
+    let mns = match clock with 
+                | x when x[3] ='0' -> int (string x[4])
+                | _ -> int clock[3..4]
+    create hrs (minutes + mns)
  
 let subtract minutes clock = failwith "You need to implement this function."
 
